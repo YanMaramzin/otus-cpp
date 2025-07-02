@@ -1,9 +1,17 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+set(PATCH_VERSION "3" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
 project(helloworld VERSION ${PROJECT_VESRION})
+message(INFO " Version: ${PROJECT_VESRION}")
+
+if(DEFINED ENV{GITHUB_RUN_NUMBER})
+    set(PATCH_VERSION $ENV{GITHUB_RUN_NUMBER})
+else()
+    # Локальная сборка (можно задать вручную или использовать другое значение)
+    set(PATCH_VERSION 0)
+endif()
 
 option(WITH_BOOST_TEST "Whether to build Boost test" ON)
 
